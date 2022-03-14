@@ -1,0 +1,62 @@
+import UIKit
+
+class ViewController: UIViewController {
+    
+    var currentValue : Int=0
+    var targetValue : Int=0
+    var score :Int=0
+    var round:Int=1
+    
+    @IBOutlet  weak var slider : UISlider!
+    @IBOutlet weak var label:UILabel!
+    @IBOutlet weak var lblScore : UILabel!
+    @IBOutlet weak var lblRound : UILabel!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view.
+        currentValue=lroundf(slider.value)
+        startNewRound()
+    }
+    
+    @IBAction func buttonClicked(){
+        let message = "The slider value : \(currentValue)" +
+                        "\nThe target value : \(targetValue)"
+        
+        let alert = UIAlertController(title: "Hello World", message: message, preferredStyle: .alert)
+        
+        let action = UIAlertAction(title: "Awesome", style: .default, handler: nil)
+       
+        alert.addAction(action)
+        
+        present(alert, animated: true, completion: nil)
+        startNewRound()
+        calculateScore()
+    }
+    
+    @IBAction func sliderMoved (_ slider : UISlider){
+        print("The value of slider is now : \(slider.value)")
+        
+        currentValue = lroundf(slider.value)
+    }
+    
+    func startNewRound(){
+       
+        targetValue = 1 + Int(arc4random_uniform(100))
+        label.text=String (targetValue)
+        slider.value=50
+        currentValue=50
+        
+       
+        lblScore.text="\(score)"
+        lblRound.text="\(round)"
+    }
+    
+    func calculateScore(){
+        score+=50
+        round+=1
+    }
+
+
+}
+
