@@ -1,0 +1,71 @@
+//
+//  ViewController.swift
+//  Bull's Eye Game A
+//
+//  Created by Cem TAŞKIN on 4.03.2022.
+//
+
+import UIKit
+
+class ViewController: UIViewController {
+
+    var currentValue: Int=0
+    var targetValue: Int = 0
+    var score : Int=0
+    var round :Int=0
+    
+    
+    
+    @IBOutlet weak var slider : UISlider!
+    @IBOutlet weak var lblTarget : UILabel!
+    
+    @IBOutlet weak var lblScore : UILabel!
+    @IBOutlet weak var lblRound : UILabel!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        startNewRound()
+        updateLabels()
+    }
+    
+    @IBAction func buttonClicked(){
+        let message = "The slider current value : \(currentValue)" +
+                        "\nThe target value : \(targetValue)"
+        let alert = UIAlertController(title: "Hello World", message: message, preferredStyle: .alert)
+        
+        let action = UIAlertAction(title: "Awesome", style: .default, handler: nil)
+        
+        alert.addAction(action)
+        
+        present(alert, animated: true, completion: nil)
+        
+        score += 50
+        
+        startNewRound()
+        updateLabels()
+        
+    }
+    
+    func startNewRound (){
+        targetValue = 1 + Int(arc4random_uniform(100))
+        slider.value = 50
+        currentValue = 50
+        round+=1
+        
+    }
+
+    
+    func updateLabels (){
+        lblTarget.text="\(targetValue)"
+        lblScore.text="\(score)"
+        lblRound.text="\(round)"
+    }
+    
+    @IBAction func sliderMoved (_ slider : UISlider){
+        currentValue = lroundf(slider.value)
+    }
+    
+    
+
+}
+
